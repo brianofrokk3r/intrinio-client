@@ -89,11 +89,15 @@ module.exports = function (username, password) {
 		ticker: function(ticker) {
 			return this.get('https://www.intrinio.com/api/companies?ticker='+ticker);
 		},
-		prices: function(ticker) {
-			return this.get('https://www.intrinio.com/api/prices?ticker='+ticker);
+		prices: function(ticker, startDate, endDate) {
+			var startDate = startDate ? startDate : moment().format('YYYY-MM-DD');
+			var endDate = endDate ? endDate : moment().format('YYYY-MM-DD');
+			return this.get('https://www.intrinio.com/api/prices?ticker='+ticker+'&start_date='+startDate+'&end_date='+endDate);
 		},
-		historical_data: function(ticker) {
-			return this.get('https://www.intrinio.com/api/historical_data?ticker='+ticker);
+		historical_data: function(ticker, startDate, endDate) {
+			var startDate = startDate ? startDate : moment().format('YYYY-MM-DD');
+			var endDate = endDate ? endDate : moment().format('YYYY-MM-DD');
+			return this.get('https://www.intrinio.com/api/historical_data?ticker='+ticker+'&start_date='+startDate+'&end_date='+endDate);
 		},
 		companies: function(ticker) {
 			return this.get('https://www.intrinio.com/api/companies?ticker='+ticker);
