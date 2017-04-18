@@ -1,5 +1,6 @@
 var rest = require('restler');
-var Promise = require("bluebird");
+var Promise = require('bluebird');
+var moment = require('moment');
 
 const EventEmitter = require('events');
 const util = require('util');
@@ -17,10 +18,12 @@ module.exports = function (username, password) {
 	  baseURL: 'https://www.intrinio.com/api'
 	}, {
 		watch: {
-			prices: function(ticker, frequency, numRequests, callback){
+			prices: function(ticker, frequency, numRequests, startDate, endDate, callback){
 				var reqCounter = 0;
+				var startDate = startDate ? startDate : moment().format('YYYY-MM-DD');
+				var endDate = endDate ? endDate : moment().format('YYYY-MM-DD');
 				var numberOfRequests = numRequests ? numRequests : 1 
-				var url = 'https://www.intrinio.com/api/prices?ticker='+ticker
+				var url = 'https://www.intrinio.com/api/prices?ticker='+ticker+'&start_date='+startDate+'&end_date='+endDate;
 				if(callback){
 						const resEmitter = new ResultEmitter();
 						callback(resEmitter)
